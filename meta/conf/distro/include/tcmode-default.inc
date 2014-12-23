@@ -50,7 +50,7 @@ PREFERRED_VERSION_nativesdk-eglibc-initial ?= "${EGLIBCVERSION}"
 PREFERRED_VERSION_cross-localedef-native   ?= "${EGLIBCVERSION}"
 PREFERRED_VERSION_uclibc                   ?= "${UCLIBCVERSION}"
 PREFERRED_VERSION_uclibc-initial           ?= "${UCLIBCVERSION}"
-PREFERRED_VERSION_elfutils ?= "0.148"
+PREFERRED_VERSION_elfutils ?= "0.160"
 # don't use version earlier than 1.4 for gzip-native, as it's necessary for
 # some packages using an archive format incompatible with earlier gzip
 PREFERRED_VERSION_gzip-native ?= "1.6"
