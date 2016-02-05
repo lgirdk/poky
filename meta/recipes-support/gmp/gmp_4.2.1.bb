@@ -12,6 +12,7 @@ PR = "r2"
 SRC_URI = "${GNU_MIRROR}/gmp/${BP}.tar.bz2 \
            file://disable-stdc.patch \
            file://gmp_fix_for_automake-1.12.patch \
+           file://avoid-h-asm-constraint-for-MIPS.patch \
            "
 
 SRC_URI[md5sum] = "091c56e0e1cca6b09b17b69d47ef18e3"
