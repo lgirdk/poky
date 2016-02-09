@@ -26,10 +26,18 @@ TARGET_PREFIX = "${BUILD_PREFIX}"
 TARGET_CC_ARCH = "${BUILD_CC_ARCH}"
 TARGET_LD_ARCH = "${BUILD_LD_ARCH}"
 TARGET_AS_ARCH = "${BUILD_AS_ARCH}"
-TARGET_CPPFLAGS = "${BUILD_CPPFLAGS}"
-TARGET_CFLAGS = "${BUILD_CFLAGS}"
-TARGET_CXXFLAGS = "${BUILD_CXXFLAGS}"
-TARGET_LDFLAGS = "${BUILD_LDFLAGS}"
+
+# TARGET_* FLAGS are never passed to the native toolchain. However, they are
+# exported so their values affect the checksum of every task. Replace with fixed
+# values to both avoid any unnecessary rebuilding of native packages when target
+# flags are changed and to poison any accidental use of target flags with the
+# native toolchain.
+TARGET_CPPFLAGS = "--target-cppflag-never-passed-to-the-native-toolchain"
+TARGET_CFLAGS = "--target-cflag-never-passed-to-the-native-toolchain"
+TARGET_CXXFLAGS = "--target-cxxflag-never-passed-to-the-native-toolchain"
+TARGET_LDFLAGS = "--target-ldflag-never-passed-to-the-native-toolchain"
+
+# Hardcoding is OK since native always implies x86 or x86-64.
 TARGET_FPU = ""
 
 HOST_ARCH = "${BUILD_ARCH}"
