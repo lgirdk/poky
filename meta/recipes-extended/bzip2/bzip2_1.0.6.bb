@@ -10,6 +10,7 @@ PR = "r5"
 
 SRC_URI = "http://www.bzip.org/${PV}/${BPN}-${PV}.tar.gz \
            file://fix-bunzip2-qt-returns-0-for-corrupt-archives.patch \
+           file://CVE-2016-3189.patch \
            file://configure.ac \
            file://run-ptest \
            file://Makefile.am"
