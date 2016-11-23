@@ -191,7 +191,7 @@ def buildcfg_vars(d):
     for var in statusvars:
         value = d.getVar(var, True)
         if value is not None:
-            yield '%-20s = "%s"' % (var, value)
+            yield '%-20s = "%s"' % (var, " ".join(value.split()))
 
 def buildcfg_neededvars(d):
     needed_vars = oe.data.typed_value("BUILDCFG_NEEDEDVARS", d)
