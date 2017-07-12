@@ -21,11 +21,10 @@ RDEPENDS_${PN}_class-native = "autoconf-native perl-native-runtime"
 SRC_URI += " file://python-libdir.patch \
             file://py-compile-compile-only-optimized-byte-code.patch \
             file://buildtest.patch \
-            file://0001-automake-port-to-Perl-5.22-and-later.patch \
             "
 
-SRC_URI[md5sum] = "716946a105ca228ab545fc37a70df3a3"
-SRC_URI[sha256sum] = "7946e945a96e28152ba5a6beb0625ca715c6e32ac55f2e353ef54def0c8ed924"
+SRC_URI[md5sum] = "95df3f2d6eb8f81e70b8cb63a93c8853"
+SRC_URI[sha256sum] = "988e32527abe052307d21c8ca000aa238b914df363a617e38f4fb89f5abf6260"
 
 CACHED_CONFIGUREVARS += "ac_cv_path_PERL=${USRBINPATH}/perl"
 
