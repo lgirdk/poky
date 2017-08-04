@@ -4,7 +4,7 @@ SECTION = "base"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=eb723b61539feef013de476e68b5c50a"
 
-SRC_URI = "${DEBIAN_MIRROR}/main/b/base-passwd/base-passwd_${PV}.tar.gz \
+SRC_URI = "https://launchpad.net/debian/+archive/primary/+files/${BPN}_${PV}.tar.gz \
            file://add_shutdown.patch \
            file://nobash.patch \
            file://noshadow.patch \
@@ -47,9 +47,14 @@ base_passwd_sstate_postinst() {
 		# put these files in the target sysroot so they can
 		# be used by recipes which use custom user/group
 		# permissions.
+		# Install passwd.master and group.master to sysconfdir and mv
+		# them to make sure they are atomically install.
 		install -d -m 755 ${STAGING_DIR_TARGET}${sysconfdir}
-		install -p -m 644 ${STAGING_DIR_TARGET}${datadir}/base-passwd/passwd.master ${STAGING_DIR_TARGET}${sysconfdir}/passwd
-		install -p -m 644 ${STAGING_DIR_TARGET}${datadir}/base-passwd/group.master ${STAGING_DIR_TARGET}${sysconfdir}/group
+		for i in passwd group; do
+			install -p -m 644 ${STAGING_DIR_TARGET}${datadir}/base-passwd/$i.master \
+				${STAGING_DIR_TARGET}${sysconfdir}/
+			mv ${STAGING_DIR_TARGET}${sysconfdir}/$i.master ${STAGING_DIR_TARGET}${sysconfdir}/$i
+		done
 	fi
 }
 

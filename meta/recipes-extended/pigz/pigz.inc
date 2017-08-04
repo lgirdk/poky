@@ -7,8 +7,6 @@ HOMEPAGE = "http://zlib.net/pigz/"
 SECTION = "console/utils"
 LICENSE = "Zlib"
 
-SRC_URI = "http://zlib.net/pigz/pigz-${PV}.tar.gz"
-
 PROVIDES_class-native += "gzip-native"
 
 DEPENDS = "zlib"
