@@ -721,6 +721,13 @@ def check_sanity_everybuild(status, d):
         with open(checkfile, "w") as f:
             f.write(tmpdir)
 
+    # Check /bin/sh links to bash
+    # Upstream oe-core allows both bash and dash here, however some RDK and/or
+    # RDK BSP recipes have build issues with dash, so allow bash only.
+    real_sh = os.path.realpath('/bin/sh')
+    if '/bash' not in real_sh:
+        status.addresult("Error, /bin/sh links to %s\n\n    Using shells other than bash as /bin/sh can causes build problems.\n    Please use bash instead (e.g. 'dpkg-reconfigure dash' on an Ubuntu systems).\n" % real_sh)
+
 def check_sanity(sanity_data):
     import subprocess
 
