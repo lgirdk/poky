@@ -1,0 +1,61 @@
+From 552b22a97e552a43a0e751e48e86db47168b2068 Mon Sep 17 00:00:00 2001
+From: Alan Modra <amodra@gmail.com>
+Date: Fri, 12 Sep 2014 09:46:30 +0930
+Subject: [PATCH] Fix tc-i386.c -Werror=logical-not-parentheses error
+
+	* config/tc-i386.c (match_template): Remove redundant "!!" testing
+	single-bit bitfields.
+	(build_modrm_byte): Don't compare single-bit bitfields to "1".
+
+Fix for build issues with gcc 5
+
+Upstream-Status: Backport
+
+  https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;a=commitdiff;h=ac4eb736520174305bf6e691827f7473b858cff1
+
+Signed-off-by: Andre McCurdy <armccurdy@gmail.com>
+---
+ gas/config/tc-i386.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/gas/config/tc-i386.c b/gas/config/tc-i386.c
+index 3c423da..4464091 100644
+--- a/gas/config/tc-i386.c
++++ b/gas/config/tc-i386.c
+@@ -4672,9 +4672,9 @@ match_template (void)
+ 	       && !operand_types[0].bitfield.regymm
+ 	       && !operand_types[0].bitfield.regzmm)
+ 	      || (!operand_types[t->operands > 1].bitfield.regmmx
+-		  && !!operand_types[t->operands > 1].bitfield.regxmm
+-		  && !!operand_types[t->operands > 1].bitfield.regymm
+-		  && !!operand_types[t->operands > 1].bitfield.regzmm))
++		  && operand_types[t->operands > 1].bitfield.regxmm
++		  && operand_types[t->operands > 1].bitfield.regymm
++		  && operand_types[t->operands > 1].bitfield.regzmm))
+ 	  && (t->base_opcode != 0x0fc7
+ 	      || t->extension_opcode != 1 /* cmpxchg8b */))
+ 	continue;
+@@ -4689,7 +4689,7 @@ match_template (void)
+ 	       && ((!operand_types[0].bitfield.regmmx
+ 		    && !operand_types[0].bitfield.regxmm)
+ 		   || (!operand_types[t->operands > 1].bitfield.regmmx
+-		       && !!operand_types[t->operands > 1].bitfield.regxmm)))
++		       && operand_types[t->operands > 1].bitfield.regxmm)))
+ 	continue;
+ 
+       /* Do not verify operands when there are none.  */
+@@ -6139,8 +6139,8 @@ build_modrm_byte (void)
+ 	      op = i.tm.operand_types[vvvv];
+ 	      op.bitfield.regmem = 0;
+ 	      if ((dest + 1) >= i.operands
+-		  || (op.bitfield.reg32 != 1
+-		      && !op.bitfield.reg64 != 1
++		  || (!op.bitfield.reg32
++		      && op.bitfield.reg64
+ 		      && !operand_type_equal (&op, &regxmm)
+ 		      && !operand_type_equal (&op, &regymm)
+ 		      && !operand_type_equal (&op, &regzmm)
+-- 
+1.9.1
+
+
