@@ -1,6 +1,6 @@
 require ${BPN}.inc
 
-SRC_URI = "ftp://ftp.freedesktop.org/pub/mesa/${PV}/MesaLib-${PV}.tar.bz2 \
+SRC_URI = "https://mesa.freedesktop.org/archive/older-versions/9.x/${PV}/MesaLib-${PV}.tar.bz2 \
            file://0002-pipe_loader_sw-include-xlib_sw_winsys.h-only-when-HA.patch \
            file://0006-fix-out-of-tree-egl.patch \
            "
