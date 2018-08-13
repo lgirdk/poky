@@ -2,13 +2,13 @@ SUMMARY = "Very high-quality data compression program"
 DESCRIPTION = "bzip2 compresses files using the Burrows-Wheeler block-sorting text compression algorithm, and \
 Huffman coding. Compression is generally considerably better than that achieved by more conventional \
 LZ77/LZ78-based compressors, and approaches the performance of the PPM family of statistical compressors."
-HOMEPAGE = "http://www.bzip.org/"
+HOMEPAGE = "https://sourceware.org/bzip2/"
 SECTION = "console/utils"
 LICENSE = "bzip2"
 LIC_FILES_CHKSUM = "file://LICENSE;beginline=8;endline=37;md5=40d9d1eb05736d1bfc86cfdd9106e6b2"
 PR = "r5"
 
-SRC_URI = "http://www.bzip.org/${PV}/${BPN}-${PV}.tar.gz \
+SRC_URI = "http://downloads.yoctoproject.org/mirror/sources/${BP}.tar.gz \
            file://fix-bunzip2-qt-returns-0-for-corrupt-archives.patch \
            file://CVE-2016-3189.patch \
            file://configure.ac \
