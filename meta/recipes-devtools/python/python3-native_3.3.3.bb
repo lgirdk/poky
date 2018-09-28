@@ -54,6 +54,22 @@ EXTRA_OEMAKE = '\
   ARCH=${TARGET_ARCH} \
 '
 
+# ----------------------------------------------------------------------------
+# Experimental workaround for modules not being compiled. Without this
+# workaround, the do_compile log contains errors such as:
+#
+#   building 'binascii' extension
+#   ...
+#   /usr/bin/ld: cannot find -lpython3.3m
+#   collect2: error: ld returned 1 exit status
+#
+# Note that these errors in the do_compile log do not cause the build to fail,
+# so the problem may not be apparent unless something specifically needs the
+# python3-native modules.
+# ----------------------------------------------------------------------------
+LDFLAGS += "-L${B}"
+# ----------------------------------------------------------------------------
+
 # No ctypes option for python 3
 PYTHONLSBOPTS = ""
 
