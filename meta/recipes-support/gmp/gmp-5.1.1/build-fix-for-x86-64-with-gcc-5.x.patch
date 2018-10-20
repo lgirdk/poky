@@ -1,0 +1,35 @@
+From b811ffc7a4463cac817af323cf95c316cc397905 Mon Sep 17 00:00:00 2001
+From: Andre McCurdy <armccurdy@gmail.com>
+Date: Fri, 19 Oct 2018 19:50:20 -0700
+Subject: [PATCH] build fix for x86-64 with gcc 5.x
+
+Backport fix from gmp 5.1.2:
+
+2013-02-16  Torbjorn Granlund  <tege@gmplib.org>
+
+	* mpn/x86_64/x86_64-defs.m4 (PROTECT): Emit '.hidden' instead of
+	'.protected" to please Sun's assembler, but also for semantic reasons.
+
+Upstream-Status: Backport
+
+Signed-off-by: Andre McCurdy <armccurdy@gmail.com>
+---
+ mpn/x86_64/x86_64-defs.m4 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mpn/x86_64/x86_64-defs.m4 b/mpn/x86_64/x86_64-defs.m4
+index 748bc61..b4ff2cb 100644
+--- a/mpn/x86_64/x86_64-defs.m4
++++ b/mpn/x86_64/x86_64-defs.m4
+@@ -218,7 +218,7 @@ dnl  Used for private GMP symbols that should never be overridden by users.
+ dnl  This can save reloc entries and improve shlib sharing as well as
+ dnl  application startup times
+ 
+-define(`PROTECT',  `.protected $1')
++define(`PROTECT',  `.hidden $1')
+ 
+ 
+ dnl  Usage: x86_lookup(target, key,value, key,value, ...)
+-- 
+2.7.4
+
