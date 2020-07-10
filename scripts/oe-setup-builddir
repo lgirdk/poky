@@ -86,6 +86,23 @@ For more information about OpenEmbedded see their website:
 
 EOM
     cp -f $OECORELOCALCONF $BUILDDIR/conf/local.conf
+
+    # ----------------------------------------------------------------------
+
+    # If the user has created a common downloads dir for all builds then
+    # use it. Otherwise fall back to build specific dirs.
+
+    if [ -e "${HOME}/oe/downloads" ]
+    then
+        sed -e 's|#DL_DIR ?= "${TOPDIR}/downloads"|DL_DIR ?= "${HOME}/oe/downloads"|' -i conf/local.conf
+    fi
+
+#   if [ -e "${HOME}/oe/sstate-cache" ]
+#   then
+#       sed -e 's|#SSTATE_DIR ?= "${TOPDIR}/sstate-cache"|SSTATE_DIR ?= "${HOME}/oe/sstate-cache"|' -i conf/local.conf
+#   fi
+
+    # ----------------------------------------------------------------------
 fi
 
 if [ -z "$OECORELAYERCONF" ]; then
