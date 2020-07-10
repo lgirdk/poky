@@ -7,7 +7,7 @@ LICENSE = "Zlib"
 LIC_FILES_CHKSUM = "file://zlib.h;beginline=4;endline=23;md5=fde612df1e5933c428b73844a0c494fd"
 
 
-SRC_URI = "http://www.zlib.net/${BPN}-${PV}.tar.xz \
+SRC_URI = "http://downloads.yoctoproject.org/mirror/sources/${BPN}-${PV}.tar.xz \
            file://remove.ldconfig.call.patch \
            file://Makefile-runtests.patch \
            file://run-ptest \
