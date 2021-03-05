@@ -41,6 +41,7 @@ SRC_URI = "\
      file://binutils_CVE-2014-8504.patch \
      file://binutils_CVE-2014-8737.patch \
      file://0001-Fix-tc-i386.c-Werror-logical-not-parentheses-error.patch \
+     file://0001-BFD-Fix-double-BFD_FAIL-calls-in-bfd_default_reloc_t.patch \
      "
 
 SRC_URI[md5sum] = "e0f71a7b2ddab0f8612336ac81d9636b"

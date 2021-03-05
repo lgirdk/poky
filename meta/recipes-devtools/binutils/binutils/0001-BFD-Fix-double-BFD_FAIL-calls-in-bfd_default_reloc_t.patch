@@ -1,0 +1,50 @@
+From d6f7ee925848a11c87e8221a0c1549d0a2defe3b Mon Sep 17 00:00:00 2001
+From: "Maciej W. Rozycki" <macro@imgtec.com>
+Date: Mon, 31 Oct 2016 16:14:35 +0000
+Subject: [PATCH] BFD: Fix double BFD_FAIL calls in
+ `bfd_default_reloc_type_lookup'
+
+Break out of the outer switch statement once the inner switch for the
+BFD_RELOC_CTOR relocation has been processed, preventing double BFD_FAIL
+calls from being made, once from the inner switch and then again from
+the default case of the outer switch.
+
+Noticed with a `-Wimplicit-fallthrough' build error reported by a recent
+GCC version:
+
+In file included from .../bfd/reloc.c:52:0:
+.../bfd/reloc.c: In function 'bfd_default_reloc_type_lookup':
+.../bfd/libbfd.h:779:8: error: this statement may fall through [-Werror=implicit-fallthrough=]
+   do { bfd_assert(__FILE__,__LINE__); } while (0)
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.../bfd/reloc.c:7780:4: note: in expansion of macro 'BFD_FAIL'
+    BFD_FAIL ();
+    ^~~~~~~~
+.../bfd/reloc.c:7782:5: note: here
+     default:
+     ^~~~~~~
+cc1: all warnings being treated as errors
+make[4]: *** [reloc.lo] Error 1
+
+	bfd/
+	* reloc.c (bfd_default_reloc_type_lookup) <BFD_RELOC_CTOR>: Do
+	not fall through to the default case.
+---
+ bfd/reloc.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/bfd/reloc.c b/bfd/reloc.c
+index 77a04f8c0c..28171b0d16 100644
+--- a/bfd/reloc.c
++++ b/bfd/reloc.c
+@@ -6993,6 +6993,7 @@ bfd_default_reloc_type_lookup (bfd *abfd, bfd_reloc_code_real_type code)
+ 	default:
+ 	  BFD_FAIL ();
+ 	}
++      break;
+     default:
+       BFD_FAIL ();
+     }
+-- 
+2.24.0
+
