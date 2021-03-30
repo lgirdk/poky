@@ -47,7 +47,7 @@ PR = "r63"
 
 # rpm2cpio is a shell script, which is part of the rpm src.rpm.  It is needed
 # in order to extract the distribution SRPM into a format we can extract...
-SRC_URI = "http://www.rpm5.org/files/rpm/rpm-5.4/rpm-5.4.9-0.20120508.src.rpm;extract=rpm-5.4.9.tar.gz \
+SRC_URI = "http://downloads.yoctoproject.org/mirror/sources/rpm-5.4.9-0.20120508.src.rpm;extract=rpm-5.4.9.tar.gz \
 	   file://rpm-log-auto-rm.patch \
 	   file://rpm-db-reduce.patch \
 	   file://perfile_rpmdeps.sh \
