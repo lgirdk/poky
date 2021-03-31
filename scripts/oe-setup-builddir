@@ -97,10 +97,10 @@ EOM
         sed -e 's|#DL_DIR ?= "${TOPDIR}/downloads"|DL_DIR ?= "${HOME}/oe/downloads"|' -i conf/local.conf
     fi
 
-    if [ -e "${HOME}/oe/sstate-cache" ]
-    then
-        sed -e 's|#SSTATE_DIR ?= "${TOPDIR}/sstate-cache"|SSTATE_DIR ?= "${HOME}/oe/sstate-cache"|' -i conf/local.conf
-    fi
+#   if [ -e "${HOME}/oe/sstate-cache" ]
+#   then
+#       sed -e 's|#SSTATE_DIR ?= "${TOPDIR}/sstate-cache"|SSTATE_DIR ?= "${HOME}/oe/sstate-cache"|' -i conf/local.conf
+#   fi
 
     # ----------------------------------------------------------------------
 fi
