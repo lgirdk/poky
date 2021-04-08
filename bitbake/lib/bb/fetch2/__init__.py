@@ -672,7 +672,9 @@ def runfetchcmd(cmd, d, quiet = False, cleanup = []):
     Optionally remove the files/directories listed in cleanup upon failure
     """
 
-    logger.warning("Running %s", cmd)
+    pn = d.getVar("PN", True)
+
+    logger.warning("%s: Running %s" % (pn, cmd))
 
     # Need to export PATH as binary could be in metadata paths
     # rather than host provided
