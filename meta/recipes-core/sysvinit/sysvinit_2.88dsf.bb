@@ -92,6 +92,6 @@ do_install () {
 	update-rc.d -r ${D} bootlogd start 07 S .
 	update-rc.d -r ${D} stop-bootlogd start 99 2 3 4 5 .
 
-	chown root.shutdown ${D}${base_sbindir}/halt ${D}${base_sbindir}/shutdown
+	chown root:shutdown ${D}${base_sbindir}/halt ${D}${base_sbindir}/shutdown
 	chmod o-x,u+s ${D}${base_sbindir}/halt ${D}${base_sbindir}/shutdown
 }
