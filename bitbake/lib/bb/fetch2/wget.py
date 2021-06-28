@@ -52,13 +52,19 @@ class WgetProgressHandler(bb.progress.LineFilterProgressHandler):
 
 
 class Wget(FetchMethod):
+    """Class to fetch urls via 'wget'"""
 
     # CDNs like CloudFlare may do a 'browser integrity test' which can fail
     # with the standard wget/urllib User-Agent, so pretend to be a modern
     # browser.
     user_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0"
 
-    """Class to fetch urls via 'wget'"""
+    def check_certs(self, d):
+        """
+        Should certificates be checked?
+        """
+        return (d.getVar("BB_CHECK_SSL_CERTS") or "1") != "0"
+
     def supports(self, ud, d):
         """
         Check to see if a given url can be fetched with wget.
@@ -82,7 +88,10 @@ class Wget(FetchMethod):
         if not ud.localfile:
             ud.localfile = d.expand(urllib.parse.unquote(ud.host + ud.path).replace("/", "."))
 
-        self.basecmd = d.getVar("FETCHCMD_wget") or "/usr/bin/env wget -t 2 -T 30 --passive-ftp --no-check-certificate"
+        self.basecmd = d.getVar("FETCHCMD_wget") or "/usr/bin/env wget -t 2 -T 30 --passive-ftp"
+
+        if not self.check_certs(d):
+            self.basecmd += " --no-check-certificate"
 
     def _runwget(self, ud, d, command, quiet, workdir=None):
 
@@ -288,12 +297,14 @@ class Wget(FetchMethod):
         if exported_proxies:
             handlers.append(urllib.request.ProxyHandler())
         handlers.append(CacheHTTPHandler())
+
         # Since Python 2.7.9 ssl cert validation is enabled by default
         # see PEP-0476, this causes verification errors on some https servers
-        # so disable by default.
+        # so disable where not wanted by configuration
         import ssl
-        if hasattr(ssl, '_create_unverified_context'):
+        if not self.check_certs(d) and hasattr(ssl, '_create_unverified_context'):
             handlers.append(urllib.request.HTTPSHandler(context=ssl._create_unverified_context()))
+
         opener = urllib.request.build_opener(*handlers)
 
         try:
