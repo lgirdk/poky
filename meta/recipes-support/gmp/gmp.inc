@@ -6,7 +6,7 @@ LICENSE = "GPLv3 LGPLv3"
 
 REVISION = ""
 
-SRC_URI = "ftp://ftp.gmplib.org/pub/gmp-${PV}/gmp-${PV}${REVISION}.tar.bz2 \
+SRC_URI = "https://gmplib.org/download/gmp/gmp-${PV}/gmp-${PV}${REVISION}.tar.bz2 \
 	   file://configure.patch \
 	   file://amd64.patch "
 
