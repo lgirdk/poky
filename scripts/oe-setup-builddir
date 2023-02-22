@@ -89,6 +89,13 @@ EOM
 
     # ----------------------------------------------------------------------
 
+    if [ "$BUILD_TYPE" = "DEBUG" ]
+    then
+        sed -e 's|# *BUILD_TYPE = "DEBUG"$|BUILD_TYPE = "DEBUG"|' -i conf/local.conf
+    fi
+
+    # ----------------------------------------------------------------------
+
     # If the user has created a common downloads dir for all builds then
     # use it. Otherwise fall back to build specific dirs.
 
