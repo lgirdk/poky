@@ -351,8 +351,12 @@ class Git(FetchMethod):
 
         # If the repo still doesn't exist, fallback to cloning it
         if not os.path.exists(ud.clonedir):
-            # We do this since git will use a "-l" option automatically for local urls where possible
-            if repourl.startswith("file://"):
+            # Strip "file://" to automatically enable the --local optimisation for file:// repos.
+            # Note that due to fixes for CVE-2023-22490 and CVE-2023-23946 (backported to most
+            # distro maintained versions of git around Feb 2023) it's now not possible to use the
+            # --local optimisation if the .git/objects directory in the local repo is a symlink
+            # (which it will be if the local repo was cloned by the Google repo tool...)
+            if repourl.startswith("file://") and not os.path.islink(os.path.join(repourl[7:], ".git", "objects")):
                 repourl = repourl[7:]
             clone_cmd = "LANG=C %s clone --bare --mirror %s %s --progress" % (ud.basecmd, shlex.quote(repourl), ud.clonedir)
             if ud.proto.lower() != 'file':
