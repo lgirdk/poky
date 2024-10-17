@@ -137,7 +137,7 @@ class SeleniumFunctionalTestCase(SeleniumTestCaseBase):
             return False
         return element
 
-    def _create_test_new_project(
+    def create_new_project(
         self,
         project_name,
         release,
@@ -197,6 +197,8 @@ class SeleniumFunctionalTestCase(SeleniumTestCaseBase):
         data = req.json()
         self.assertGreater(len(data['results']), 0, f"New project:{project_name} not found in database")
 
+        project_id = data['results'][0]['id']
+
         # check release
         self.assertTrue(re.search(
             release_title,
@@ -205,3 +207,4 @@ class SeleniumFunctionalTestCase(SeleniumTestCaseBase):
                                      ).text),
                         'The project release is not defined')
 
+        return project_id
