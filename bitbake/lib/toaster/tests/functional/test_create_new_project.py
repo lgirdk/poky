@@ -13,7 +13,6 @@ import requests
 from django.urls import reverse
 from selenium.webdriver.support.select import Select
 from tests.functional.functional_helpers import SeleniumFunctionalTestCase
-from orm.models import Project
 from selenium.webdriver.common.by import By
 
 class TestCreateNewProject(SeleniumFunctionalTestCase):
