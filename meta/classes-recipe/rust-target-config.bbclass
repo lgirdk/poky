@@ -144,6 +144,8 @@ TARGET_POINTER_WIDTH[armv7-eabi] = "32"
 TARGET_C_INT_WIDTH[armv7-eabi] = "32"
 MAX_ATOMIC_WIDTH[armv7-eabi] = "64"
 FEATURES[armv7-eabi] = "+v7,+vfp2,+thumb2"
+ABI[armv7-eabi] = "eabihf"
+LLVM_FLOATABI[armv7-eabi] = "hard"
 
 ## aarch64-unknown-linux-{gnu, musl}
 DATA_LAYOUT[aarch64] = "e-m:e-i8:8:32-i16:16:32-i64:64-i128:128-n32:64-S128-Fn32"
@@ -371,6 +373,8 @@ def rust_gen_target(d, thing, wd, arch):
     tspec['target-c-int-width'] = d.getVarFlag('TARGET_C_INT_WIDTH', arch_abi)
     tspec['target-endian'] = d.getVarFlag('TARGET_ENDIAN', arch_abi)
     tspec['arch'] = arch_to_rust_target_arch(rust_arch)
+    tspec['llvm-floatabi'] = d.getVarFlag('LLVM_FLOATABI', arch_abi)
+    tspec['abi'] = d.getVarFlag('ABI', arch_abi)
     if "baremetal" in d.getVar('TCLIBC'):
         tspec['os'] = "none"
     else:
